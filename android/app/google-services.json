@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "659088466351",
+    "project_id": "frontagenda1",
+    "storage_bucket": "frontagenda1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659088466351:android:4b781c0f16956268114f5a",
+        "android_client_info": {
+          "package_name": "com.edmundoz.agenda_academica_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAutwv4PRRKZlKcsv5mKMHxtMykJQmwXCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659088466351:android:ac83fc855bf12192114f5a",
+        "android_client_info": {
+          "package_name": "com.edmundozenteno.push_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAutwv4PRRKZlKcsv5mKMHxtMykJQmwXCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
