@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:agenda_academica_app/utils/variables.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../components/custom_drawer.dart';
@@ -81,6 +85,18 @@ class _CalendarioPageState extends State<CalendarioPage> {
     getEventDetailsFromAI(command, context);
   }
 
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      File imageFile = File(pickedImage.path);
+      // Llamada a la API para procesar la imagen
+      await getEventDetailsFromImage(
+          imageFile, context); // Implementa esta función en tu API
+    }
+  }
+
   Future<void> _fetchEvents() async {
     try {
       _apiEvents = await eventService.fetchFilteredEvents();
@@ -151,7 +167,7 @@ class _CalendarioPageState extends State<CalendarioPage> {
     _updateSelectedEvents();
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -220,12 +236,28 @@ class _CalendarioPageState extends State<CalendarioPage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _startListening,
-        label: Text(_isListening ? 'Escuchando...' : 'Crear con IA'),
-        icon: Icon(_isListening ? Icons.mic : Icons.mic_none),
-        backgroundColor: _isListening ? Colors.red : Colors.blue,
-      ),
+      floatingActionButton: userRole == profesor
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FloatingActionButton.extended(
+                  onPressed: _startListening,
+                  label: Text(_isListening ? 'Escuchando...' : 'Crear con IA'),
+                  icon: Icon(_isListening ? Icons.mic : Icons.mic_none),
+                  backgroundColor: _isListening ? Colors.red : Colors.blue,
+                  heroTag: 'voice_button', // Tag único para el botón de voz
+                ),
+                const SizedBox(height: 10),
+                FloatingActionButton.extended(
+                  onPressed: _pickImage,
+                  label: const Text('Crear por imagen'),
+                  icon: const Icon(Icons.image),
+                  backgroundColor: Colors.green,
+                  heroTag: 'image_button', // Tag único para el botón de imagen
+                ),
+              ],
+            )
+          : null,
     );
   }
 }

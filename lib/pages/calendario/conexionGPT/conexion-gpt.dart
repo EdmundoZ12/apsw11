@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:agenda_academica_app/utils/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -21,8 +22,7 @@ Future<void> getEventDetailsFromAI(
   );
 
   final url = Uri.parse(
-    '',
-    // 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=$apiKeyGemini',
+    'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=$apiKeyGemini',
   );
 
   final response = await http.post(
@@ -51,9 +51,10 @@ Future<void> getEventDetailsFromAI(
     final candidates = data['candidates'];
     if (candidates != null && candidates.isNotEmpty) {
       var eventJsonText = candidates[0]['content']['parts'][0]['text'];
-      eventJsonText =
-          eventJsonText.replaceAll(RegExp(r'^```json|```$'), '').trim();
-      print(eventJsonText);
+      eventJsonText = eventJsonText
+          .replaceAll(RegExp(r'^```json\s*|\s*```$', multiLine: true), '')
+          .trim();
+      print("eventJsonText: $eventJsonText");
       try {
         final eventDetails = jsonDecode(eventJsonText);
         await createEvent(
@@ -66,6 +67,71 @@ Future<void> getEventDetailsFromAI(
     }
   } else {
     print('Error en la solicitud: ${response.statusCode}');
+  }
+}
+
+Future<void> getEventDetailsFromImage(
+    File imageFile, BuildContext context) async {
+  // Mostrar el cuadro de diálogo de "Procesando"
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => AlertDialog(
+      content: Row(
+        children: [
+          CircularProgressIndicator(),
+          SizedBox(width: 16),
+          Text("Procesando imagen..."),
+        ],
+      ),
+    ),
+  );
+
+  // Codifica la imagen en base64
+  final bytes = await imageFile.readAsBytes();
+  final base64Image = base64Encode(bytes);
+
+  // Configura la URL de la Vision API con tu API Key
+  final url = Uri.parse(
+      'https://vision.googleapis.com/v1/images:annotate?key=$apiKeyGoogle');
+
+  // Configura la solicitud con los parámetros necesarios
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({
+      "requests": [
+        {
+          "image": {"content": base64Image},
+          "features": [
+            {"type": "TEXT_DETECTION"}
+          ] // O el tipo de detección que desees
+        }
+      ]
+    }),
+  );
+
+  Navigator.of(context).pop(); // Cerrar el diálogo de "Procesando imagen"
+
+  // Verifica si la respuesta fue exitosa
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+
+    // Extraer todos los campos "description" en un solo texto
+    final descriptions = data['responses'][0]['textAnnotations']
+        ?.map((annotation) => annotation['description'])
+        ?.join(' ');
+
+    if (descriptions != null && descriptions.isNotEmpty) {
+      print("Texto extraído de la imagen: $descriptions");
+
+      // Llamar a la función para obtener los detalles del evento usando el texto extraído
+      await getEventDetailsFromAI(descriptions, context);
+    } else {
+      print('No se encontró texto en la imagen.');
+    }
+  } else {
+    print('Error en la solicitud: ${response.statusCode} ${response.body}');
   }
 }
 

@@ -27,7 +27,7 @@ class Event {
     required this.isTeacherEvent,
     required this.teacherIds,
     required this.studentIds,
-    required this.courseIds, 
+    required this.courseIds,
     required this.responsibleId,
   });
 

@@ -15,7 +15,8 @@ class Usuario {
 final List<Usuario> usuarios = [
   Usuario(name: 'admin', user: 'admin@gmail.com', password: '1234', idUser: 1),
   Usuario(name: 'alumno', user: 'alum@gmail.com', password: '1234', idUser: 2),
-  Usuario(name: 'profesor', user: 'profe@gmail.com', password: '1234', idUser: 3),
+  Usuario(
+      name: 'profesor', user: 'profe@gmail.com', password: '1234', idUser: 3),
   Usuario(name: 'tutor', user: 'tutor@gmail.com', password: '1234', idUser: 4),
 ];
 

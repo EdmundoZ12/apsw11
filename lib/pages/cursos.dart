@@ -65,7 +65,8 @@ class _CursosPageState extends State<CursosPage> {
                       children: [
                         Text(
                           curso['name'],
-                          style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                          style: theme.textTheme.titleLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
                           'Código: ${curso['code']}',
@@ -90,7 +91,8 @@ class _CursosPageState extends State<CursosPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MateriasProfePage(courseId: curso['id']),
+                                builder: (context) =>
+                                    MateriasProfePage(courseId: curso['id']),
                               ),
                             );
                           },

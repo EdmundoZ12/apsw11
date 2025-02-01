@@ -15,11 +15,11 @@ class EventService {
         "service": "object",
         "method": "execute_kw",
         "args": [
-          dbName,          // Nombre de la base de datos
-          superid,         // ID del usuario autenticado
-          superPassword,    // Contraseña del usuario
+          dbName, // Nombre de la base de datos
+          superid, // ID del usuario autenticado
+          superPassword, // Contraseña del usuario
           "academy.event", // Modelo en Odoo
-          "search_read",   // Método para leer datos
+          "search_read", // Método para leer datos
           [],
           {
             "fields": [
@@ -68,7 +68,8 @@ class EventService {
         final teacherIds = List<int>.from(eventData['teacher_ids'] ?? []);
         final studentIds = List<int>.from(eventData['student_ids'] ?? []);
         final courseIds = List<int>.from(eventData['course_ids'] ?? []);
-        final responsibleId = List<dynamic>.from(eventData['responsible_id']??[]);
+        final responsibleId =
+            List<dynamic>.from(eventData['responsible_id'] ?? []);
 
         return Event(
           title: name,
@@ -97,19 +98,27 @@ class EventService {
     }
   }
 
-  List<Event> _filterEventsByUserRole(List<Event> events) {
+  Future<List<Event>> _filterEventsByUserRole(List<Event> events) async {
+    // Obtener los IDs de hijos
+    final List<int> hijosIdsList = await hijosIds ?? [];
 
     return events.where((event) {
-      if (userRole == 1) { // Administrador
+      if (userRole == 1) {
+        // Administrador
         return event.isAdminEvent || event.creatorType == 'admin';
-      } else if (userRole == profesor) { // Profesor
+      } else if (userRole == profesor) {
+        // Profesor
         return event.isTeacherEvent ||
             event.creatorType == 'teacher' ||
             event.teacherIds.contains(profeId);
-      } else if (userRole == estudiante) { // Estudiante
+      } else if (userRole == estudiante) {
+        // Estudiante
         return event.creatorType == 'student' ||
             event.studentIds.contains(studentId) ||
             event.courseIds.contains(cursoId);
+      } else if (userRole == representante) {
+        // Filtrar eventos que contengan al menos un `studentId` de `hijosIdsList`
+        return hijosIdsList.any((id) => event.studentIds.contains(id));
       }
       return false;
     }).toList();

@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
+import 'package:agenda_academica_app/service/hijosService.dart';
 import 'package:agenda_academica_app/utils/variables.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,6 +10,7 @@ import '../datos/datos_padre.dart';
 import '../datos/datos_profesor.dart';
 
 class AuthService {
+  final HijosService _hijosService = HijosService();
   Future<int?> login(String email, String password) async {
     // Definir la URL de autenticación
     final url = Uri.parse(ipOdoo);
@@ -257,6 +259,8 @@ class AuthService {
     } else {
       throw Exception('Failed to fetch parent data');
     }
+    final IdHijos = _hijosService.fetchChildrenIds();
+    hijosIds = IdHijos;
   }
 }
 

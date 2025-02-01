@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../components/custom_drawer.dart';
 import '../../service/materiasService.dart';
 
-
 class MateriasProfePage extends StatefulWidget {
   final int courseId;
 

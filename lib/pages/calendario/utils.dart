@@ -5,7 +5,6 @@ import 'dart:collection';
 import 'package:table_calendar/table_calendar.dart';
 import '../../models/events.dart';
 
-
 final kEvents = LinkedHashMap<DateTime, List<Event>>(
   equals: isSameDay,
   hashCode: getHashCode,

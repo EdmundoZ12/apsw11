@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   void _login() async {
     final email = emailController.text;
     final password = passwordController.text;
-    
+
     // Llamada a la función login en AuthService
     final userId = await authService.login(email, password);
     print("Id del user: $userId");
@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     if (userId != null) {
       final role = await authService.checkRolUser(userId, password);
       print("Rol del usuario: $role");
-      
+
       // Almacenar userId y role en shared_preferences
       await DataUser().saveUserData(userId, role, password);
       registerTokenDevice();
@@ -107,10 +107,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 20.0),
                   ElevatedButton(
-                    onPressed:() async {
+                    onPressed: () async {
                       _login(); // Llamada a la función _login
                       context.read<NotificationsBloc>().requestPermission();
-                    } ,
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: theme.colorScheme.primary,
                       padding: const EdgeInsets.symmetric(

@@ -25,7 +25,8 @@ class _MateriasPageState extends State<MateriasPage> {
   Future<void> _fetchMaterias() async {
     try {
       // Obtener curso y sus materias
-      final cursoData = await _materiasService.getCurso(cursoId); // Ajusta cursoId y userId
+      final cursoData =
+          await _materiasService.getCurso(cursoId); // Ajusta cursoId y userId
       setState(() {
         nombreCurso = cursoData["courseName"];
       });

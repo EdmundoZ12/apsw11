@@ -1,5 +1,3 @@
-
-
 import '../datos/datos_estudiante.dart';
 import '../datos/datos_padre.dart';
 import '../datos/datos_profesor.dart';
@@ -8,17 +6,18 @@ import '../utils/variables.dart';
 class PerfilService {
   // Método para obtener los datos de perfil basados en el rol de usuario
   Map<String, String> getUserProfileData() {
-
-    
-    if (userRole == profesor) { // Profesor
+    if (userRole == profesor) {
+      // Profesor
       return {
         "firstName": DataTeacher().name ?? '',
-        "lastName": "",  // Puedes ajustar el nombre completo aquí si necesitas dividirlo
+        "lastName":
+            "", // Puedes ajustar el nombre completo aquí si necesitas dividirlo
         "position": "Profesor",
         "email": DataTeacher().email ?? '',
         "code": DataTeacher().identification ?? ''
       };
-    } else if (userRole == estudiante) { // Estudiante
+    } else if (userRole == estudiante) {
+      // Estudiante
       return {
         "firstName": DataStudent().name ?? '',
         "lastName": "", // Igual que arriba, ajustar según el nombre completo
@@ -26,10 +25,11 @@ class PerfilService {
         "email": DataStudent().email ?? '',
         "code": DataStudent().identification ?? ''
       };
-    } else if (userRole == representante) { // Padre
+    } else if (userRole == representante) {
+      // Padre
       return {
         "firstName": DataParent().name ?? '',
-        "lastName": "",  // Ajustar si es necesario
+        "lastName": "", // Ajustar si es necesario
         "position": "Representante",
         "email": DataParent().email ?? '',
         "code": DataParent().identification ?? ''

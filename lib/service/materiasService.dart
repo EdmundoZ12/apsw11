@@ -13,8 +13,17 @@ class MateriasService {
         "service": "object",
         "method": "execute_kw",
         "args": [
-          dbName, superid, superPassword, "academy.course", "read", [[courseId]],
-          {"fields": ["name", "subject_ids"]}
+          dbName,
+          superid,
+          superPassword,
+          "academy.course",
+          "read",
+          [
+            [courseId]
+          ],
+          {
+            "fields": ["name", "subject_ids"]
+          }
         ]
       },
       "id": 1
@@ -48,8 +57,17 @@ class MateriasService {
         "service": "object",
         "method": "execute_kw",
         "args": [
-          dbName, superid, superPassword, "academy.subject", "read", [[materiaId]],
-          {"fields": ["id", "name", "code", "description"]}
+          dbName,
+          superid,
+          superPassword,
+          "academy.subject",
+          "read",
+          [
+            [materiaId]
+          ],
+          {
+            "fields": ["id", "name", "code", "description"]
+          }
         ]
       },
       "id": 2
@@ -81,9 +99,23 @@ class MateriasService {
           "service": "object",
           "method": "execute_kw",
           "args": [
-            dbName, superid, superPassword, "academy.course", "read", [[courseId]],
+            dbName,
+            superid,
+            superPassword,
+            "academy.course",
+            "read",
+            [
+              [courseId]
+            ],
             {
-              "fields": ["name", "subject_ids", "code", "period_id", "level_id", "parallel_id"]
+              "fields": [
+                "name",
+                "subject_ids",
+                "code",
+                "period_id",
+                "level_id",
+                "parallel_id"
+              ]
             }
           ]
         },

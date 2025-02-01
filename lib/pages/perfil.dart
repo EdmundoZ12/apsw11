@@ -32,7 +32,10 @@ class ProfilePage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [theme.colorScheme.primary.withOpacity(0.1), theme.colorScheme.primary],
+            colors: [
+              theme.colorScheme.primary.withOpacity(0.1),
+              theme.colorScheme.primary
+            ],
           ),
         ),
         child: Padding(
@@ -54,7 +57,8 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileHeader(String firstName, String lastName, String position, ThemeData theme) {
+  Widget _buildProfileHeader(
+      String firstName, String lastName, String position, ThemeData theme) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -77,7 +81,8 @@ class ProfilePage extends StatelessWidget {
           children: <Widget>[
             Text(
               '$firstName $lastName',
-              style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              style: theme.textTheme.titleLarge
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 5.0),
             Text(
@@ -103,7 +108,8 @@ class ProfilePage extends StatelessWidget {
         children: <Widget>[
           Text(
             label,
-            style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            style: theme.textTheme.titleMedium
+                ?.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
             value,
